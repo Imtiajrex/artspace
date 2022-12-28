@@ -26,9 +26,9 @@
 		background-color: #232932;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 	}
 	.container {
-		margin-top: 25%;
 		max-width: 450px;
 		width: 100%;
 	}

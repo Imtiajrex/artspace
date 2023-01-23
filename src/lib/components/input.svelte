@@ -35,7 +35,7 @@
 		padding: 20px;
 		font-size: 16px;
 		border-radius: 12px;
-		background-color: var(--dark-bg);
+		background-color: var(--bg);
 		border: none;
 		color: var(--primary-text);
 	}

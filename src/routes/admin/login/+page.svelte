@@ -23,7 +23,7 @@
 	.wrapper {
 		min-height: 100vh;
 		width: 100%;
-		background-color: #232932;
+		background-color: var(--dark-bg);
 		display: flex;
 		justify-content: center;
 		align-items: center;

@@ -1,13 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 :root {
-	--bg: #232932;
-	--dark-bg: #1e2229;
+	--bg: #222;
+	--dark-bg: #111;
 	--primary-text: #fff;
-	--primary: #ffd36a;
+	--primary: #ea8c58;
 }
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Roboto';
+}
+a {
+	text-decoration: none;
+	color: var(--primary);
+}
+body {
+	background: var(--dark-bg);
+	color: var(--primary-text);
+}
+.container {
+	padding: 20px;
+	max-width: 1400px;
+	width: 100%;
+	margin-inline: auto;
 }

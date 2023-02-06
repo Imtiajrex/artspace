@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Star, MessageCircle } from 'tabler-icons-svelte';
+	import { IconStar, IconMessageCircle } from '@tabler/icons-svelte';
 	export let image: string;
 	export let rating: number;
 	export let comments: number;
@@ -12,11 +12,11 @@
 	</div>
 	<div class="card-content">
 		<span>
-			<Star size={15} />
+			<IconStar size={15} />
 			{rating}
 		</span>
 		<span>
-			<MessageCircle size={15} />
+			<IconMessageCircle size={15} />
 			{comments}
 		</span>
 	</div>

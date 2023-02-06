@@ -1,11 +1,11 @@
 <script>
 	// @ts-ignore
-	import { Search } from 'tabler-icons-svelte';
+	import { IconSearch } from '@tabler/icons-svelte';
 </script>
 
 <div>
 	<span>
-		<Search size={16} />
+		<IconSearch size={16} />
 	</span>
 	<input type="text" placeholder="Search For Arts" />
 </div>

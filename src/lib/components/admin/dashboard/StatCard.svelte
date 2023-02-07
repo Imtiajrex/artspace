@@ -1,4 +1,5 @@
 <script>
+	import Button from '$lib/components/button.svelte';
 	import { Icon123, IconUser } from '@tabler/icons-svelte';
 	export let Icon = IconUser;
 	export let name = 'Users';
@@ -7,7 +8,7 @@
 
 <div class="card">
 	<div class="icon">
-		<Icon />
+		<Icon color="#111" />
 	</div>
 	<div>
 		<h3>{numbers}</h3>

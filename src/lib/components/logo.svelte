@@ -1,4 +1,8 @@
-<a href="/">Artspace</a>
+<script>
+	export let link = '/';
+</script>
+
+<a href={link}>Artspace</a>
 
 <style>
 	a {

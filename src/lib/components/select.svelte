@@ -2,31 +2,28 @@
 	// @ts-nocheck
 
 	export let label = '';
-	export let type = 'text';
 	export let placeholder = 'Enter ' + label;
 	export let value = '';
-	export let name = Math.random().toString(36).substring(7);
+	export let name = 'input';
+	export let options = [
+		{
+			label: 'Option 1',
+			value: 'option1'
+		}
+	];
 	export let disabled = false;
-	const handleInput = (e) => {
-		value = e.target.value;
-	};
 </script>
 
 <div class="input-container">
 	<label for={name}>
 		{label}
 	</label>
-	<input
-		autocorrect={false}
-		autocomplete={'false'}
-		{disabled}
-		{type}
-		id={name}
-		{name}
-		{placeholder}
-		{value}
-		on:input={handleInput}
-	/>
+	<select {disabled} class="input" id={name} {name} {placeholder} bind:value>
+		<option value={''} disabled>Select A {label}</option>
+		{#each options as option}
+			<option value={option.value}>{option.label}</option>
+		{/each}
+	</select>
 </div>
 
 <style>
@@ -42,7 +39,7 @@
 		font-weight: bold;
 		color: var(--primary-text);
 	}
-	input {
+	.input {
 		padding: 20px;
 		font-size: 16px;
 		border-radius: 12px;

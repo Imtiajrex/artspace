@@ -1,17 +1,21 @@
 <script lang="ts">
+	import { Circle } from 'svelte-loading-spinners';
 	export let text = 'Click Me';
-	export let onClick = () => {};
+	export let onClick: any = () => {};
 	export let outline = false;
 	export let maxWidth = '350px';
 	export let fontSize = '20px';
 	export let link = '';
 	export let Icon: any = null;
+	export let style = '';
+	export let loading = false;
+	export let disabled = false;
 </script>
 
 {#if link.length > 0}
 	<a
 		href={link}
-		style={`max-width:${maxWidth};font-size:${fontSize}`}
+		style={`max-width:${maxWidth};font-size:${fontSize};${style}`}
 		class={`button ${outline && 'outline'}`}
 		on:click={onClick}
 	>
@@ -19,16 +23,21 @@
 	</a>
 {:else}
 	<button
-		style={`max-width:${maxWidth};font-size:${fontSize}`}
+		style={`max-width:${maxWidth};font-size:${fontSize};${style}`}
 		class={`button ${outline && 'outline'}`}
 		on:click={onClick}
+		disabled={disabled || loading}
 	>
-		{#if Icon}
-			<span class="icon">
-				<Icon size={20} />
-			</span>
+		{#if loading}
+			<Circle color="black" size={25} />
+		{:else}
+			{#if Icon}
+				<span class="icon">
+					<Icon size={20} />
+				</span>
+			{/if}
+			{text}
 		{/if}
-		{text}
 	</button>
 {/if}
 

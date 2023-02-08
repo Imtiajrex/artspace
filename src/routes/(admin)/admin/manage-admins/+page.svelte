@@ -1,14 +1,43 @@
 <script>
 	import PageLinks from '$lib/components/admin/dashboard/page-links.svelte';
+	import AddAdmin from '$lib/components/admin/manage/add-admin.svelte';
+	import Delete from '$lib/components/admin/manage/delete.svelte';
+	import EditAdmin from '$lib/components/admin/manage/edit-admin.svelte';
 	import Button from '$lib/components/button.svelte';
 	import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-svelte';
+	import { onMount } from 'svelte';
 	const data = [{ username: '@imtiajrex', role: 'Moderator', createdAt: '2021-08-01' }];
+	let addOpen = false;
+	let editOpen = false;
+	let deleteOpen = false;
+
+	const getAdmins = async () => {
+		const res = await fetch('/api/admin/manage');
+		const data = await res.json();
+		return data;
+	};
+
+	onMount(() => {
+		getAdmins().then((data) => {
+			console.log(data);
+		});
+	});
 </script>
 
 <div class="container">
+	<AddAdmin bind:open={addOpen} />
+	<EditAdmin bind:open={editOpen} />
+	<Delete bind:open={deleteOpen} />
 	<PageLinks page="admin" />
 	<div class="admin-container">
-		<Button text="Add admin" Icon={IconPlus} maxWidth={'250px'} />
+		<Button
+			text="Add admin"
+			Icon={IconPlus}
+			maxWidth={'250px'}
+			onClick={() => {
+				addOpen = true;
+			}}
+		/>
 		<table>
 			<thead>
 				<tr>
@@ -27,10 +56,10 @@
 						<td>{role}</td>
 						<td>{createdAt}</td>
 						<td>
-							<button>
+							<button on:click={() => (deleteOpen = true)}>
 								<IconTrash />
 							</button>
-							<button>
+							<button on:click={() => (editOpen = true)}>
 								<IconPencil />
 							</button>
 						</td>
@@ -65,5 +94,12 @@
 		cursor: pointer;
 		color: var(--primary);
 		margin-right: 20px;
+	}
+	button:hover,
+	button:focus {
+		filter: brightness(1.2);
+	}
+	button:active {
+		filter: brightness(0.9);
 	}
 </style>

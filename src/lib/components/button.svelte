@@ -1,17 +1,18 @@
 <script lang="ts">
 	export let text = 'Click Me';
-	export let onClick = () => {};
+	export let onClick: any = () => {};
 	export let outline = false;
 	export let maxWidth = '350px';
 	export let fontSize = '20px';
 	export let link = '';
 	export let Icon: any = null;
+	export let style = '';
 </script>
 
 {#if link.length > 0}
 	<a
 		href={link}
-		style={`max-width:${maxWidth};font-size:${fontSize}`}
+		style={`max-width:${maxWidth};font-size:${fontSize};${style}`}
 		class={`button ${outline && 'outline'}`}
 		on:click={onClick}
 	>
@@ -19,7 +20,7 @@
 	</a>
 {:else}
 	<button
-		style={`max-width:${maxWidth};font-size:${fontSize}`}
+		style={`max-width:${maxWidth};font-size:${fontSize};${style}`}
 		class={`button ${outline && 'outline'}`}
 		on:click={onClick}
 	>

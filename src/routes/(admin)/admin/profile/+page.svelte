@@ -1,12 +1,15 @@
 <script>
 	import PageLinks from '$lib/components/admin/dashboard/page-links.svelte';
+	import EditModal from '$lib/components/admin/profile/editModal.svelte';
 	import Button from '$lib/components/button.svelte';
 
 	let username = 'imtiajrex';
 	let role = 'Moderator';
+	let editOpen = false;
 </script>
 
 <div class="container">
+	<EditModal bind:open={editOpen} />
 	<PageLinks />
 	<div class="info ">
 		<div class="info-card">
@@ -18,7 +21,7 @@
 			<h2>{role}</h2>
 		</div>
 	</div>
-	<Button text="Edit Profile" />
+	<Button text="Edit Profile" onClick={() => (editOpen = true)} />
 </div>
 
 <style>

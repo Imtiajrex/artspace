@@ -15,7 +15,7 @@
 		<h1>Admin Sign In</h1>
 		<Input label="Username" name="username" type="text" bind:value={username} />
 		<Input label="Password" name="password" type="password" bind:value={password} />
-		<Button text="Sign In" onClick={handleClick} />
+		<Button text="Sign In" onClick={handleClick} maxWidth="500px" />
 	</form>
 </div>
 
@@ -38,5 +38,8 @@
 		text-align: center;
 		margin-bottom: 3rem;
 		font-size: 45px;
+	}
+	button {
+		margin-inline: auto;
 	}
 </style>

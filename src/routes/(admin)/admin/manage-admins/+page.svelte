@@ -6,28 +6,38 @@
 	import Button from '$lib/components/button.svelte';
 	import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-svelte';
 	import { onMount } from 'svelte';
-	const data = [{ username: '@imtiajrex', role: 'Moderator', createdAt: '2021-08-01' }];
+
+	import { Circle } from 'svelte-loading-spinners';
+	let data = [];
 	let addOpen = false;
 	let editOpen = false;
 	let deleteOpen = false;
+	let id = '';
+	let loading = true;
 
 	const getAdmins = async () => {
-		const res = await fetch('/api/admin/manage');
-		const data = await res.json();
-		return data;
+		loading = true;
+		try {
+			const res = await fetch('/api/admin/manage');
+			if (res.status !== 200) throw new Error(res.statusText);
+			const responseData = await res.json();
+			data = responseData;
+		} catch (e) {
+			console.log(e.message);
+			alert(e.message);
+		}
+		loading = false;
 	};
 
 	onMount(() => {
-		getAdmins().then((data) => {
-			console.log(data);
-		});
+		getAdmins();
 	});
 </script>
 
 <div class="container">
-	<AddAdmin bind:open={addOpen} />
-	<EditAdmin bind:open={editOpen} />
-	<Delete bind:open={deleteOpen} />
+	<AddAdmin bind:open={addOpen} update={getAdmins} />
+	<EditAdmin bind:open={editOpen} bind:id update={getAdmins} />
+	<Delete bind:open={deleteOpen} bind:id update={getAdmins} />
 	<PageLinks page="admin" />
 	<div class="admin-container">
 		<Button
@@ -38,47 +48,72 @@
 				addOpen = true;
 			}}
 		/>
-		<table>
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Username</th>
-					<th>Role</th>
-					<th>Created At</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each data as { username, role, createdAt }, i}
+		{#if loading}
+			<div class="loader-container">
+				<Circle size={25} color="white" />
+			</div>
+		{:else}
+			<table>
+				<thead>
 					<tr>
-						<td>{i + 1}</td>
-						<td>{username}</td>
-						<td>{role}</td>
-						<td>{createdAt}</td>
-						<td>
-							<button on:click={() => (deleteOpen = true)}>
-								<IconTrash />
-							</button>
-							<button on:click={() => (editOpen = true)}>
-								<IconPencil />
-							</button>
-						</td>
+						<th>#</th>
+						<th>Username</th>
+						<th>Role</th>
+						<th>Created At</th>
+						<th>Actions</th>
 					</tr>
-				{/each}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{#each data as row, i}
+						<tr>
+							<td>{i + 1}</td>
+							<td>{row.username}</td>
+							<td>{row.role}</td>
+							<td>{row.createdAt}</td>
+							<td>
+								<button
+									on:click={() => {
+										deleteOpen = true;
+										id = row.admin_id;
+									}}
+								>
+									<IconTrash />
+								</button>
+								<button
+									on:click={() => {
+										editOpen = true;
+										id = row.admin_id;
+									}}
+								>
+									<IconPencil />
+								</button>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{/if}
 	</div>
 </div>
 
 <style>
+	.loader-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: var(--bg);
+		border-radius: 7px;
+		margin-top: 40px;
+		padding: 20px;
+	}
 	.admin-container {
 		margin-top: 60px;
 	}
 	table {
 		width: 100%;
-		margin-top: 40px;
 		background-color: var(--bg);
 		border-radius: 7px;
+		margin-top: 40px;
 	}
 	th,
 	td {

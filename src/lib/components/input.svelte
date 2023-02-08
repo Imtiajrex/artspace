@@ -5,7 +5,8 @@
 	export let type = 'text';
 	export let placeholder = 'Enter ' + label;
 	export let value = '';
-	export let name = 'input';
+	export let name = Math.random().toString(36).substring(7);
+	export let disabled = false;
 	const handleInput = (e) => {
 		value = e.target.value;
 	};
@@ -15,7 +16,17 @@
 	<label for={name}>
 		{label}
 	</label>
-	<input {type} id={name} {name} {placeholder} on:input={handleInput} />
+	<input
+		autocorrect={false}
+		autocomplete={'false'}
+		{disabled}
+		{type}
+		id={name}
+		{name}
+		{placeholder}
+		{value}
+		on:input={handleInput}
+	/>
 </div>
 
 <style>

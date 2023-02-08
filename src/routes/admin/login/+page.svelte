@@ -4,9 +4,24 @@
 	import Input from '$lib/components/input.svelte';
 	let username = '';
 	let password = '';
-	const handleClick = (e) => {
+	const handleClick = async (e) => {
 		e.preventDefault();
-		console.log(username, password);
+		const res = await fetch('/api/admin/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username,
+				password
+			})
+		});
+		if (res.status != 200) {
+			const body = await res.json();
+			alert(body.message);
+			return;
+		}
+		window.location.href = '/admin';
 	};
 </script>
 

@@ -11,13 +11,14 @@
 			value: 'option1'
 		}
 	];
+	export let disabled = false;
 </script>
 
 <div class="input-container">
 	<label for={name}>
 		{label}
 	</label>
-	<select class="input" id={name} {name} {placeholder} bind:value>
+	<select {disabled} class="input" id={name} {name} {placeholder} bind:value>
 		<option value={''} disabled>Select A {label}</option>
 		{#each options as option}
 			<option value={option.value}>{option.label}</option>

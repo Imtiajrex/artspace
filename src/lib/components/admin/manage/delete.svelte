@@ -3,7 +3,25 @@
 	import Input from '$lib/components/input.svelte';
 	import Modal from '../modal.svelte';
 	export let open = false;
-	const deleteAdmin = async () => {};
+	export let id = '';
+	let deleting = false;
+	export let update = () => {};
+	const deleteAdmin = async () => {
+		if (id === '') return;
+		deleting = true;
+		const res = await fetch(`/api/admin/manage/${id}`, {
+			method: 'DELETE'
+		});
+		if (res.status != 200) {
+			const data = await res.json();
+			alert(data.message);
+			deleting = false;
+			return;
+		}
+		deleting = false;
+		update();
+		open = false;
+	};
 </script>
 
 <Modal bind:open size={'650px'}>
@@ -13,9 +31,17 @@
 		<Button
 			text="Cancel"
 			maxWidth="200px"
+			onClick={() => {
+				open = false;
+			}}
 			style="background-color:#222222;color:white;padding:5px;font-size:18px;"
 		/>
-		<Button text="Delete" maxWidth="200px" style="background-color:#D4155A;" />
+		<Button
+			text="Delete"
+			maxWidth="200px"
+			style="background-color:#D4155A;"
+			onClick={deleteAdmin}
+		/>
 	</div>
 </Modal>
 

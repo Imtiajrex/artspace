@@ -26,9 +26,17 @@ export async function POST({ url, request }) {
 	const [rows] = await db.execute('SELECT * FROM admins WHERE username = ?', [username]);
 
 	if (rows.length > 0) throw error(400, 'Username already exists');
-	const res = await db.execute('INSERT INTO admins (username, password) VALUES (?, ?)', [
+	const [insert] = await db.execute('INSERT INTO admins (username, password) VALUES (?, ?)', [
 		username,
 		hashedPassword
+	]);
+	const roleMap = {
+		Admin: 1,
+		Moderator: 2
+	};
+	await db.execute('INSERT INTO admin_has_roles (admin_id, role_id) VALUES (?, ?)', [
+		insert.insertId,
+		roleMap[role]
 	]);
 	db.end();
 	return new Response(JSON.stringify({ status: 'success', message: 'Admin created' }));

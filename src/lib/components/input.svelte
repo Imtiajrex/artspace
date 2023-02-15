@@ -8,6 +8,7 @@
 	export let name = Math.random().toString(36).substring(7);
 	export let disabled = false;
 	const handleInput = (e) => {
+		console.log(e.target.file);
 		value = e.target.value;
 	};
 </script>

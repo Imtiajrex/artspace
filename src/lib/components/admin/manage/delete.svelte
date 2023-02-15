@@ -39,6 +39,7 @@
 		<Button
 			text="Delete"
 			maxWidth="200px"
+			loading={deleting}
 			style="background-color:#D4155A;"
 			onClick={deleteAdmin}
 		/>

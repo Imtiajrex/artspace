@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import Button from '$lib/components/button.svelte';
 	import Input from '$lib/components/input.svelte';
 	import Select from '$lib/components/select.svelte';
@@ -49,11 +51,11 @@
 			options={[
 				{
 					label: 'Admin',
-					value: 'admin'
+					value: 'Admin'
 				},
 				{
-					label: 'User',
-					value: 'user'
+					label: 'Moderator',
+					value: 'Moderator'
 				}
 			]}
 			label="Role"

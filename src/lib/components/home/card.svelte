@@ -1,14 +1,21 @@
 <script lang="ts">
 	import { IconStar, IconMessageCircle } from '@tabler/icons-svelte';
-	export let image: string;
+	export let img: string;
 	export let rating: number;
-	export let comments: number;
+	export let feedbacks: number;
 	export let id: string;
+	let loaded = false;
 </script>
 
 <a href="/post/{id}" class="card">
-	<div class="img-container">
-		<img src={image} alt={'Post'} />
+	<div class="img-container" class:pulse={!loaded}>
+		<img
+			src={img}
+			alt={'Post'}
+			on:load={() => {
+				loaded = true;
+			}}
+		/>
 	</div>
 	<div class="card-content">
 		<span>
@@ -17,7 +24,7 @@
 		</span>
 		<span>
 			<IconMessageCircle size={15} />
-			{comments}
+			{feedbacks}
 		</span>
 	</div>
 </a>
@@ -32,8 +39,10 @@
 		width: 100%;
 		border-radius: 16px;
 		min-height: 80px;
-		background-color: var(--bg);
+	}
+	.pulse {
 		animation: pulse 1s infinite;
+		background-color: var(--bg);
 	}
 	@keyframes pulse {
 		0% {

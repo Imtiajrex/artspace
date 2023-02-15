@@ -45,7 +45,6 @@
 		open = false;
 	};
 	const getAdminData = async () => {
-		console.log('ran');
 		once = true;
 		if (typeof id != 'number') {
 			alert('No id provided');
@@ -64,8 +63,8 @@
 		}
 		username = data[0].username;
 		role = data[0].role;
+		console.log(role, data[0]);
 		gettingData = false;
-		console.log(gettingData, updating);
 	};
 	let once = false;
 	$: {
@@ -86,11 +85,11 @@
 			options={[
 				{
 					label: 'Admin',
-					value: 'admin'
+					value: 'Admin'
 				},
 				{
-					label: 'User',
-					value: 'user'
+					label: 'Moderator',
+					value: 'Moderator'
 				}
 			]}
 			label="Role"

@@ -31,6 +31,7 @@
 	"type": "module",
 	"dependencies": {
 		"bcrypt": "^5.1.0",
+		"cloudinary": "^1.34.0",
 		"crypto-js": "^4.1.1",
 		"mysql2": "^3.1.1",
 		"svelte-loading-spinners": "^0.3.4"

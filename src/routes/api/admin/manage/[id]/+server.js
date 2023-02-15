@@ -41,6 +41,16 @@ export async function PUT({ params, request }) {
 	} else {
 		await db.execute('UPDATE admins set username = ? where admin_id = ?', [username, id]);
 	}
+	if (role) {
+		const roleMap = {
+			Admin: 1,
+			Moderator: 2
+		};
+		await db.execute('UPDATE admin_has_roles set role_id = ? where admin_id = ?', [
+			roleMap[role],
+			id
+		]);
+	}
 	db.end();
 	return new Response(JSON.stringify({ status: 'success', message: 'Admin updated' }));
 }
@@ -48,7 +58,10 @@ export async function PUT({ params, request }) {
 export async function GET({ params }) {
 	const id = params.id;
 	const db = await getDB();
-	const [rows, fields] = await db.execute('SELECT username FROM admins WHERE admin_id = ?', [id]);
+	const [rows, fields] = await db.execute(
+		'SELECT username,role,admins.admin_id FROM admins  LEFT JOIN admin_has_roles ON admins.admin_id = admin_has_roles.admin_id LEFT JOIN roles ON admin_has_roles.role_id = roles.role_id WHERE admins.admin_id = ?',
+		[id]
+	);
 	db.end();
 	return new Response(JSON.stringify(rows));
 }

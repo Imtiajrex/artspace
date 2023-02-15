@@ -1,67 +1,52 @@
 <script>
-	import Card from './card.svelte';
+	// @ts-nocheck
 
-	let posts = [
-		{
-			image:
-				'https://plus.unsplash.com/premium_photo-1669752004585-7e5cfdcbee30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzd8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 4.5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1578301978018-3005759f48f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzV8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1559102877-4a2cc0e37fce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1585644198527-05519fdeaf98?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1585644198527-05519fdeaf98?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1585644198527-05519fdeaf98?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
-		},
-		{
-			image:
-				'https://images.unsplash.com/photo-1585644198527-05519fdeaf98?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTh8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60',
-			rating: 5,
-			comments: 10,
-			id: 'sdkfiow'
+	import { onMount } from 'svelte';
+	import { Circle } from 'svelte-loading-spinners';
+	import Card from './card.svelte';
+	let loading = true;
+
+	let arts = [];
+
+	const getArts = async () => {
+		loading = true;
+		try {
+			const res = await fetch('/api/arts/');
+			if (res.status !== 200) throw new Error(res.statusText);
+			const responseData = await res.json();
+			arts = responseData;
+		} catch (e) {
+			console.log(e.message);
+			alert(e.message);
 		}
-	];
-	posts = posts.concat(posts);
+		loading = false;
+	};
+
+	onMount(() => {
+		getArts();
+	});
 </script>
 
-<div class="posts container">
-	{#each posts as post}
-		<Card {...post} />
-	{/each}
-</div>
+{#if loading}
+	<div class="loading">
+		<Circle color="var(--primary)" size={30} />
+	</div>
+{:else}
+	<div class="posts container">
+		{#each arts as art}
+			<Card {...art} />
+		{/each}
+	</div>
+{/if}
 
 <style>
+	.loading {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 50vh;
+	}
 	.posts {
 		columns: 4;
 		column-gap: 20px;

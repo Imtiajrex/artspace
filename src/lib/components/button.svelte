@@ -7,6 +7,7 @@
 	export let fontSize = '20px';
 	export let link = '';
 	export let Icon: any = null;
+	export let type: string = 'submit';
 	export let style = '';
 	export let loading = false;
 	export let disabled = false;
@@ -27,6 +28,7 @@
 		class={`button ${outline && 'outline'}`}
 		on:click={onClick}
 		disabled={disabled || loading}
+		{type}
 	>
 		{#if loading}
 			<Circle color="black" size={25} />

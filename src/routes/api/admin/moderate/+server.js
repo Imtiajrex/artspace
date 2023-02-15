@@ -1,11 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-export async function GET({ url }) {
-	return new Response('test');
-}
-export async function POST({ url, request }) {
-	const { id, status } = await request.json();
+import { error } from '@sveltejs/kit';
+import getDB from '$lib/server/db';
 
-	console.log(url);
-	return new Response(JSON.stringify({}));
+export async function GET({ url }) {
+	try {
+		const db = await getDB();
+		const [rows] = await db.execute('SELECT * FROM arts where flagged = 1');
+		db.end();
+		return new Response(JSON.stringify(rows));
+	} catch (e) {
+		throw error(500, e.message);
+	}
 }

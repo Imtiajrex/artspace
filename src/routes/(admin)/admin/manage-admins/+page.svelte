@@ -4,7 +4,7 @@
 	import Delete from '$lib/components/admin/manage/delete.svelte';
 	import EditAdmin from '$lib/components/admin/manage/edit-admin.svelte';
 	import Button from '$lib/components/button.svelte';
-	import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-svelte';
+	import { IconPencil, IconPlus, IconStar, IconStarFilled, IconTrash } from '@tabler/icons-svelte';
 	import { onMount } from 'svelte';
 
 	import { Circle } from 'svelte-loading-spinners';

@@ -23,8 +23,10 @@
 				role
 			})
 		});
+		console.log(res);
 		if (res.status != 200) {
 			const body = await res.json();
+			console.log(body);
 			alert(body.message);
 			creating = false;
 			return;

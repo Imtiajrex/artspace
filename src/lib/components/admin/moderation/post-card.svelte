@@ -1,19 +1,42 @@
 <script>
-	import { IconCheck, IconX } from '@tabler/icons-svelte';
+	// @ts-nocheck
+
 	import ModerationBtn from './moderation-btn.svelte';
 
-	export let id = 0;
-	export let image = '';
+	export let art_id = 0;
+	export let img = '';
 	export let flagged = true;
 
 	let status = 'pending';
+	const approve = () => {
+		changeStatus(1);
+	};
+	const decline = () => {
+		changeStatus(0);
+	};
+	const changeStatus = async (action) => {
+		const res = await fetch(`/api/admin/moderate/${art_id}`, {
+			method: 'POST',
+			body: JSON.stringify({
+				id: art_id,
+				status: action
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		console.log(res);
+
+		flagged = Boolean(action);
+		status = action ? 'approved' : 'declined';
+	};
 </script>
 
 <div class="post-card">
-	<img src={image} />
+	<img src={img} />
 	<div class="btns">
-		<ModerationBtn bind:status />
-		<ModerationBtn bind:status approval={false} />
+		<ModerationBtn {status} onclick={approve} />
+		<ModerationBtn {status} onclick={decline} approval={false} />
 	</div>
 </div>
 

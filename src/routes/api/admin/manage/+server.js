@@ -11,6 +11,7 @@ export async function GET({ url }) {
 		db.end();
 		return new Response(JSON.stringify(rows));
 	} catch (e) {
+		console.log(e.message);
 		throw error(500, e.message);
 	}
 }

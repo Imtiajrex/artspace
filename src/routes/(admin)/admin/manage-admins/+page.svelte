@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import PageLinks from '$lib/components/admin/dashboard/page-links.svelte';
 	import AddAdmin from '$lib/components/admin/manage/add-admin.svelte';
 	import Delete from '$lib/components/admin/manage/delete.svelte';
@@ -59,7 +61,6 @@
 						<th>#</th>
 						<th>Username</th>
 						<th>Role</th>
-						<th>Created At</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -69,7 +70,6 @@
 							<td>{i + 1}</td>
 							<td>{row.username}</td>
 							<td>{row.role}</td>
-							<td>{row.createdAt}</td>
 							<td>
 								<button
 									on:click={() => {
@@ -97,11 +97,12 @@
 </div>
 
 <style>
-	.loader-container {
+	:global(.loader-container) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		background-color: var(--bg);
+		width: 100%;
 		border-radius: 7px;
 		margin-top: 40px;
 		padding: 20px;

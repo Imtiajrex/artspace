@@ -3,12 +3,14 @@
 	import Input from '$lib/components/input.svelte';
 	import Modal from '../modal.svelte';
 	export let open = false;
+	export let onEdit = () => {};
 	let username = '';
 	let password = '';
+	export let id = 15;
 	let updating = false;
 	const handleSubmit = async () => {
 		updating = true;
-		const res = await fetch('/api/admin/profile', {
+		const res = await fetch(`/api/admin/profile/${id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
@@ -18,7 +20,10 @@
 				password
 			})
 		});
+		username = '';
+		password = '';
 		updating = false;
+		onEdit();
 		if (res.ok) {
 			open = false;
 		}

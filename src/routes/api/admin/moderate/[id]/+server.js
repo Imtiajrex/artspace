@@ -2,7 +2,7 @@
 // @ts-nocheck
 import getDB from '$lib/server/db';
 
-export async function POST({ url, request }) {
+export async function POST({ params, request }) {
 	console.log('post');
 	const { id, status } = await request.json();
 

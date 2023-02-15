@@ -1,18 +1,33 @@
 <script>
+	// @ts-nocheck
+
 	import PageLinks from '$lib/components/admin/dashboard/page-links.svelte';
 	import StatCard from '$lib/components/admin/dashboard/StatCard.svelte';
 	import Button from '$lib/components/button.svelte';
 	import { IconMoodAngry, IconPaint, IconUser } from '@tabler/icons-svelte';
+	import { onMount } from 'svelte';
 	let name = 'Imtiajrex';
+
+	let loading = true;
+	onMount(() => {
+		getData();
+	});
+	let data = {};
+	const getData = async () => {
+		loading = true;
+		const res = await fetch('/api/admin/dashboard');
+		data = await res.json();
+		loading = false;
+	};
 </script>
 
 <div class="container">
 	<h1>Welcome {name}</h1>
 	<p>Admin Dashboard</p>
 	<div class="card-container">
-		<StatCard name="Users" />
-		<StatCard name="Arts" numbers="500+" Icon={IconPaint} />
-		<StatCard name="Moderation Needed" numbers="500+" Icon={IconMoodAngry} />
+		<StatCard name="Users" numbers={data.users} />
+		<StatCard name="Arts" numbers={data.arts} Icon={IconPaint} />
+		<StatCard name="Moderation Needed" numbers={data.moderation} Icon={IconMoodAngry} />
 	</div>
 	<PageLinks />
 </div>

@@ -7,7 +7,9 @@ import sha256 from 'crypto-js/sha256';
 export async function GET({ url }) {
 	try {
 		const db = await getDB();
-		const [rows, fields] = await db.execute('SELECT * FROM admins');
+		const [rows] = await db.execute(
+			'SELECT * FROM admins LEFT JOIN admin_has_roles ON admins.admin_id = admin_has_roles.admin_id LEFT JOIN roles ON admin_has_roles.role_id = roles.role_id'
+		);
 		db.end();
 		return new Response(JSON.stringify(rows));
 	} catch (e) {

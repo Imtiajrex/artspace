@@ -26,11 +26,11 @@
 </script>
 
 <div class="wrapper">
-	<form class="container">
+	<form class="container" on:submit={handleClick}>
 		<h1>Admin Sign In</h1>
 		<Input label="Username" name="username" type="text" bind:value={username} />
 		<Input label="Password" name="password" type="password" bind:value={password} />
-		<Button text="Sign In" onClick={handleClick} maxWidth="500px" />
+		<Button text="Sign In" maxWidth="500px" />
 	</form>
 </div>
 

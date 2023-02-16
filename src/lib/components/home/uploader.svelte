@@ -15,7 +15,7 @@
 		const imgData = imgBase64.split(',');
 		data['art'] = imgData[1];
 		data['tags'] = tags;
-		const res = await fetch('/api/art/upload', {
+		const res = await fetch('/api/arts', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,6 +39,15 @@
 			avatar = e.target.result;
 		};
 	}
+	const handleTags = () => {
+		if (!tags.some((t) => t == tag)) {
+			tags = [...tags, tag];
+		} else {
+			alert('Already has same tag');
+		}
+
+		tag = '';
+	};
 </script>
 
 <Modal bind:open>
@@ -66,12 +75,39 @@
 			outline
 			onClick={() => fileInput.click()}
 		/>
-		<Input label="Tags" bind:value={tag} />
+		<form on:submit|preventDefault={handleTags}>
+			<Input label="Tags" bind:value={tag} />
+			<div class="tags">
+				{#each tags as tag}
+					<button
+						type="button"
+						on:click={() => {
+							tags = tags.filter((t) => t != tag);
+						}}
+					>
+						{tag}
+					</button>
+				{/each}
+			</div>
+		</form>
 		<Button text="Upload" maxWidth={'500px'} loading={uploading} />
 	</form>
 </Modal>
 
 <style>
+	.tags {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+		margin: 20px 0;
+	}
+	button {
+		padding: 10px 25px;
+		background-color: var(--bg);
+		border-radius: 25px;
+		color: white;
+		cursor: pointer;
+	}
 	h1 {
 		text-align: center;
 		margin: 20px 0;

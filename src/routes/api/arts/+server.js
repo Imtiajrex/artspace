@@ -3,7 +3,7 @@
 import { error } from '@sveltejs/kit';
 import getDB from '$lib/server/db';
 import { writeFileSync } from 'fs';
-import { sha256 } from 'crypto-js';
+import sha256 from 'crypto-js/sha256';
 export async function GET({ url }) {
 	try {
 		const db = await getDB();

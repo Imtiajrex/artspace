@@ -19,15 +19,43 @@ export async function GET({ url }) {
 	}
 }
 
+const options = {
+	method: 'POST',
+	headers: {
+		'content-type': 'application/json',
+		'X-RapidAPI-Key': '27dd3fc2c7mshf26f97eb781041ep17e066jsnfc7652ca744c',
+		'X-RapidAPI-Host': 'image-labeling1.p.rapidapi.com'
+	},
+	body: '{"url":"http://res.cloudinary.com/do9x4igrn/image/upload/v1677087854/a5uxtmjllg0tk8bfbfsp.jpg"}'
+};
+
 export async function POST({ url, request }) {
 	const { tags, art } = await request.json();
-	const imageName = '/arts/' + sha256(Date.now()).toString() + '.png';
+	const res = await upload(art);
+	const imgURL = res.url;
+	const imageLabelingRes = await fetch('https://image-labeling1.p.rapidapi.com/img/label', {
+		...options,
+		body: JSON.stringify({
+			url: imgURL
+		})
+	});
+	const imageLabelingData = await imageLabelingRes.json();
+	const imagesLabels = Object.keys(imageLabelingData);
+	console.log(imageLabelingData);
+	const nsfwWords = ['adult', 'violence', 'nude', 'fire', 'blood', ''];
+	let flagged = 0;
+	imagesLabels.forEach((label) => {
+		if (nsfwWords.includes(label.toLowerCase())) {
+			flagged = 1;
+		}
+		tags.push(label);
+	});
 
-	writeFileSync(`static${imageName}`, art, 'base64');
 	const db = await getDB();
-	const [rows] = await db.execute('INSERT INTO arts (img, user_id,flagged) VALUES (?, ?, 0)', [
-		imageName,
-		1
+	const [rows] = await db.execute('INSERT INTO arts (img, user_id,flagged) VALUES (?, ?, ?)', [
+		imgURL,
+		1,
+		flagged
 	]);
 	if (tags && tags.length > 0) {
 		let tagQuery = 'INSERT INTO tags (tag, art_id) VALUES ';

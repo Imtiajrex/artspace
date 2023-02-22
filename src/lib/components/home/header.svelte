@@ -7,6 +7,7 @@
 	import Uploader from './uploader.svelte';
 	import User from './user.svelte';
 	export let search;
+	export let reload;
 	let uploader = false;
 	const openUploader = () => {
 		uploader = true;
@@ -26,6 +27,7 @@
 
 <Uploader
 	bind:open={uploader}
+	bind:reload
 	on:close={() => {
 		uploader = false;
 	}}

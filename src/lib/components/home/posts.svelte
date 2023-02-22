@@ -5,6 +5,7 @@
 	import { Circle } from 'svelte-loading-spinners';
 	import Card from './card.svelte';
 	export let search;
+	export let reload;
 	let loading = true;
 
 	let arts = [];
@@ -21,6 +22,8 @@
 			alert(e.message);
 		}
 		loading = false;
+
+		reload = false;
 	};
 	const searchArts = async () => {
 		loading = true;
@@ -35,6 +38,11 @@
 		}
 		loading = false;
 	};
+	$: {
+		if (reload) {
+			getArts();
+		}
+	}
 	$: {
 		if (search) searchArts();
 	}

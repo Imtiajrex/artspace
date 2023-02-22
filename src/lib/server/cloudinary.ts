@@ -15,6 +15,6 @@ export const upload = async (file: string) => {
 		result = await cloudinary.uploader.upload(file);
 		return result;
 	} catch (e: any) {
-		console.log('upload error', e);
+		console.log('upload error', e.message);
 	}
 };

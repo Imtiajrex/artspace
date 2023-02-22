@@ -12,7 +12,7 @@
 	const uploadArt = async () => {
 		uploading = true;
 		const data = {};
-		const imgData = imgBase64.split(',');
+		const imgData = avatar.split(',');
 		data['art'] = imgData[1];
 		data['tags'] = tags;
 		const res = await fetch('/api/arts', {
@@ -25,8 +25,11 @@
 		if (res.status != 200) {
 			const body = await res.json();
 			alert(body.message);
+		} else {
+			alert('Shared Your Art Successfully');
 		}
 		uploading = false;
+		open = false;
 	};
 	let fileInput;
 	let files;
@@ -62,7 +65,7 @@
 				class="hidden"
 				id="upload"
 				type="file"
-				accept=".png,.jpg"
+				accept=".png,.jpg,.webp"
 				bind:files
 				bind:this={fileInput}
 				on:change={() => getBase64(files[0])}

@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import { Circle } from 'svelte-loading-spinners';
 	import Card from './card.svelte';
+	export let search;
 	let loading = true;
 
 	let arts = [];
@@ -21,7 +22,22 @@
 		}
 		loading = false;
 	};
-
+	const searchArts = async () => {
+		loading = true;
+		try {
+			const res = await fetch(`/api/arts/${search}`);
+			if (res.status !== 200) throw new Error(res.statusText);
+			const responseData = await res.json();
+			arts = responseData;
+		} catch (e) {
+			console.log(e.message);
+			alert(e.message);
+		}
+		loading = false;
+	};
+	$: {
+		if (search) searchArts();
+	}
 	onMount(() => {
 		getArts();
 	});

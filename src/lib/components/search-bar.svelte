@@ -1,5 +1,5 @@
 <script>
-	// @ts-ignore
+	// @ts-nocheck
 	import { IconSearch } from '@tabler/icons-svelte';
 	export let search;
 </script>

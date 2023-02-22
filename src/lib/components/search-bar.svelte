@@ -1,13 +1,14 @@
 <script>
 	// @ts-ignore
 	import { IconSearch } from '@tabler/icons-svelte';
+	export let search;
 </script>
 
 <div>
 	<span>
 		<IconSearch size={16} />
 	</span>
-	<input type="text" placeholder="Search For Arts" />
+	<input type="text" placeholder="Search For Arts" bind:value={search} />
 </div>
 
 <style>

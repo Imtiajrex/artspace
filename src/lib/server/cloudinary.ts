@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const cloudinary = require('cloudinary').v2;
-
+import { v2 as cloudinary } from 'cloudinary';
+import type { UploadApiResponse } from 'cloudinary';
 // Configuration
 cloudinary.config({
 	cloud_name: 'do9x4igrn',
@@ -9,9 +9,12 @@ cloudinary.config({
 });
 
 // Upload
-export const upload = async (file: File) => {
-	const result = await cloudinary.uploader.upload(file, {
-		folder: 'artspace'
-	});
-	return result;
+export const upload = async (file: string) => {
+	let result;
+	try {
+		result = await cloudinary.uploader.upload(file);
+		return result;
+	} catch (e: any) {
+		console.log('upload error', e.message);
+	}
 };

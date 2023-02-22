@@ -1,9 +1,13 @@
 <script>
+	// @ts-nocheck
+
 	import { IconPlus } from '@tabler/icons-svelte';
 	import Logo from '../logo.svelte';
 	import SearchBar from '../search-bar.svelte';
 	import Uploader from './uploader.svelte';
 	import User from './user.svelte';
+	export let search;
+	export let reload;
 	let uploader = false;
 	const openUploader = () => {
 		uploader = true;
@@ -12,7 +16,7 @@
 
 <header class="container">
 	<Logo />
-	<SearchBar />
+	<SearchBar bind:search />
 	<div>
 		<button on:click={openUploader}>
 			<IconPlus size={20} />
@@ -23,6 +27,7 @@
 
 <Uploader
 	bind:open={uploader}
+	bind:reload
 	on:close={() => {
 		uploader = false;
 	}}

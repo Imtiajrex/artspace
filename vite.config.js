@@ -9,6 +9,9 @@ const config = {
 			$components: '/src/components',
 			src: '/src'
 		}
+	},
+	server: {
+		fs: { allow: ['..'] }
 	}
 };
 

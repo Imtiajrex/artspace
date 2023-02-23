@@ -8,6 +8,7 @@
 	let rating = 0;
 	let comments = 30;
 	let tags=['Abstract', 'Flower', 'Colorful','Painting'];
+	let feedbacks
 
 let showcomments = false;
 
@@ -16,6 +17,15 @@ let commentsIconColor='#D9D9D9';
 function togglecomments() {
 	showcomments = !showcomments;
 	commentsIconColor='#EA8C58';
+}
+
+let showratings = false;
+
+let starIconColor='#D9D9D9';
+
+function toggleratings() {
+	showratings = !showratings;
+	starIconColor='#EA8C58';
 }
 
 import { createEventDispatcher } from 'svelte';
@@ -68,8 +78,8 @@ function setRating(newRating) {
 		</div>
 		<div class="btns">
 			<div>
-				<button class="btn">
-					<IconStar size={25} color="#D9D9D9"/>
+				<button class="btn" on:click={toggleratings}>
+					<IconStar size={25} color="{starIconColor}"/>
 				</button>
 			</div>
 			<div>
@@ -93,8 +103,10 @@ function setRating(newRating) {
 		<div class="enterfeedbacks">
   			<input type="text" class="feedbacks" placeholder="Enter Your Feedback"/>
 		</div>	
-		  
-		  
+	</div>
+
+	<div class="starRatings {showratings ? 'show' : ''}">
+		<h1>Ratings</h1>
 	</div>
 	
 </div>
@@ -158,11 +170,6 @@ function setRating(newRating) {
 	margin: 20px 20px 20px 20px;
 	font-family: Roboto;
   }
-  p{
-	margin: 20px 20px 20px 20px;
-	font-family: Roboto;
-	font-size: 16;
-  }
   .comments {
     position: fixed;
 	border-top-left-radius: 10px;
@@ -221,6 +228,22 @@ function setRating(newRating) {
 	border-radius: 10px;
 	background-color:#111111;
 	border: 0;
-	padding-right: 20px;
+  }
+
+  .starRatings {
+    position: fixed;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 400px;
+    background-color: #222222;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(400px);
+  }
+  .starRatings.show {
+    transform: translateX(0);
   }
 </style>

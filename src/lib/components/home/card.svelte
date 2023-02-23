@@ -3,11 +3,11 @@
 	export let img: string;
 	export let rating: number;
 	export let feedbacks: number;
-	export let id: string;
+	export let art_id: string;
 	let loaded = false;
 </script>
 
-<a href="/post/{id}" class="card">
+<a href="/post/{art_id}" class="card">
 	<div class="img-container" class:pulse={!loaded}>
 		<img
 			src={img}

@@ -44,7 +44,7 @@
 		}
 	}
 	$: {
-		if (search) searchArts();
+		if (search && search.length>0) searchArts();
 	}
 	onMount(() => {
 		getArts();

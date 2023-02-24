@@ -1,7 +1,17 @@
 <script>
 	//@ts-nocheck
 	import {IconChevronDown, IconChevronUp,IconStar,IconMessageCircle} from '@tabler/icons-svelte';
-
+	export let data;
+	console.log(data)
+	let post
+	const getPost = async ()=>{
+		let res = await fetch('/api/art/'+data.id)
+		post = await res.json()
+		console.log(post)
+	}
+	onMount(()=>{
+		getPost();
+	})
 	let username = 'username';
 	let id = 'id';
 	let image = 'image';
@@ -28,7 +38,7 @@ function toggleratings() {
 	starIconColor='#EA8C58';
 }
 
-import { createEventDispatcher } from 'svelte';
+import { createEventDispatcher, onMount } from 'svelte';
 
 const dispatch = createEventDispatcher();
 
@@ -64,7 +74,7 @@ function setRating(newRating) {
 					@{username}
 				</a>	
 				<div>
-					<img src="https://source.unsplash.com/random" alt="art">
+					<img src={post?.img} alt="art">
 				</div>
 				<div class="stars">
 					<span class="star" on:click={() => setRating(1)}>{rating >= 1 ? '★' : '☆'}</span>
@@ -132,7 +142,7 @@ function setRating(newRating) {
 		border-radius: 10px;
 		margin:  20px 20px 20px 20px ;
 		max-height: 500px;
-		max-width: 1000px;
+		max-width: 600px;
 		
 	}
 

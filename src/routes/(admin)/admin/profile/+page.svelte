@@ -13,7 +13,12 @@
 	});
 	const getData = async () => {
 		loading = true;
-		const res = await fetch('/api/admin/profile/15');
+		const token = localStorage.getItem('token');
+		const res = await fetch('/api/admin/profile/' + token, {
+			headers: {
+				'access-token': token
+			}
+		});
 		data = await res.json();
 		loading = false;
 	};

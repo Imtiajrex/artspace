@@ -3,8 +3,10 @@
 import { error } from '@sveltejs/kit';
 import getDB from '$lib/server/db';
 import sha256 from 'crypto-js/sha256';
+import { adminTokenChecker } from '$lib/server/adminTokenChecker';
 
-export async function GET({ url }) {
+export async function GET({ url, request }) {
+	if (!adminTokenChecker(request, ['Admin'])) throw error(401, 'Unauthorized');
 	try {
 		const db = await getDB();
 		const [rows] = await db.execute(

@@ -4,8 +4,9 @@
 	import Input from '$lib/components/input.svelte';
 	let username = '';
 	let password = '';
+	let loading = false;
 	const handleClick = async (e) => {
-		e.preventDefault();
+		loading = true;
 		const res = await fetch('/api/admin/login', {
 			method: 'POST',
 			headers: {
@@ -16,11 +17,14 @@
 				password
 			})
 		});
+		const body = await res.json();
 		if (res.status != 200) {
-			const body = await res.json();
 			alert(body.message);
 			return;
 		}
+		console.log(body);
+		localStorage.setItem('token', body.token);
+		loading = false;
 		window.location.href = '/admin';
 	};
 </script>
@@ -30,7 +34,7 @@
 		<h1>Admin Sign In</h1>
 		<Input label="Username" name="username" type="text" bind:value={username} />
 		<Input label="Password" name="password" type="password" bind:value={password} />
-		<Button text="Sign In" maxWidth="500px" />
+		<Button text="Sign In" maxWidth="500px" {loading} />
 	</form>
 </div>
 

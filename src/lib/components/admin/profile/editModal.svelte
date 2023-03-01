@@ -20,13 +20,16 @@
 				password
 			})
 		});
-		username = '';
-		password = '';
-		updating = false;
-		onEdit();
 		if (res.ok) {
+			username = '';
+			password = '';
 			open = false;
+			onEdit();
+		} else {
+			const body = await res.json();
+			alert(body.message);
 		}
+		updating = false;
 	};
 </script>
 

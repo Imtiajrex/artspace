@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { adminTokenChecker } from '$lib/server/adminTokenChecker';
 import getDB from '$lib/server/db';
+import { error } from '@sveltejs/kit';
 
 export async function POST({ params, request }) {
-	console.log('post');
+	if (!adminTokenChecker(request, ['Admin', 'Moderator'])) throw error(401, 'Unauthorized');
 	const { id, status } = await request.json();
 
 	const db = await getDB();

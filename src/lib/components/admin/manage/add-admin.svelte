@@ -17,7 +17,8 @@
 		const res = await fetch('/api/admin/manage', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'access-token': localStorage.getItem('token')
 			},
 			body: JSON.stringify({
 				username,

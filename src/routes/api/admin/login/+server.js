@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { getUser } from '$lib/server/adminTokenChecker';
 import getDB from '$lib/server/db';
 import { error } from '@sveltejs/kit';
 import sha256 from 'crypto-js/sha256';
@@ -16,5 +17,13 @@ export async function POST({ url, request }) {
 	if (rows.length == 0) throw error(400, 'Invalid credentials');
 
 	db.end();
-	return new Response(JSON.stringify({ status: 'success', message: 'Logged In' }));
+	const user = getUser(rows[0].admin_id);
+	return new Response(
+		JSON.stringify({
+			status: 'success',
+			message: 'Logged In',
+			token: user.admin_id,
+			role: user.role
+		})
+	);
 }

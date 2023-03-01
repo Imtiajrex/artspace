@@ -3,7 +3,8 @@
 import getDB from '$lib/server/db';
 import sha256 from 'crypto-js/sha256';
 import { error } from '@sveltejs/kit';
-export async function DELETE({ params }) {
+import { adminTokenChecker } from '$lib/server/adminTokenChecker';
+export async function DELETE({ params, request }) {
 	const id = params.id;
 	const db = await getDB();
 	const res = await db.execute('DELETE FROM admins WHERE admin_id = ?', [id]);

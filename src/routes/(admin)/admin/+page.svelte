@@ -15,7 +15,12 @@
 	let data = {};
 	const getData = async () => {
 		loading = true;
-		const res = await fetch('/api/admin/dashboard');
+		const token = localStorage.getItem('token');
+		const res = await fetch('/api/admin/dashboard', {
+			headers: {
+				'access-token': token
+			}
+		});
 		data = await res.json();
 		loading = false;
 	};

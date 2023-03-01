@@ -9,7 +9,7 @@
 	let loading = true;
 
 	let arts = [];
-
+	let mounted = false;
 	const getArts = async () => {
 		loading = true;
 		try {
@@ -44,10 +44,14 @@
 		}
 	}
 	$: {
-		if (search && search.length>0) searchArts();
+		if (mounted) {
+			if (search && search.length > 0) searchArts();
+			else getArts();
+		}
 	}
 	onMount(() => {
 		getArts();
+		mounted = true;
 	});
 </script>
 

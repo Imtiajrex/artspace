@@ -68,7 +68,7 @@
 {/if}
 
 <style>
-	.loading {
+	:global(.loading) {
 		display: flex;
 		justify-content: center;
 		align-items: center;

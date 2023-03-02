@@ -17,40 +17,51 @@
 	let image = 'image';
 	let rating = 0;
 	let comments = 30;
-	let tags=['Abstract', 'Flower', 'Colorful','Painting'];
+	let tags=['abstract', 'flower', 'colorful','painting','sky'];
 	let feedbacks
 
-let showcomments = false;
+	let showcomments = false;
 
-let commentsIconColor='#D9D9D9';
+	let commentsIconColor='#D9D9D9';
 
-function togglecomments() {
-	showcomments = !showcomments;
-	commentsIconColor='#EA8C58';
-}
+	function togglecomments() {
+		showcomments = !showcomments;
+		if(showcomments){
+			commentsIconColor='#EA8C58';
+		}
+		else{
+			commentsIconColor='#D9D9D9';
+		}
+	}
 
-let showratings = false;
+	let showratings = false;
 
-let starIconColor='#D9D9D9';
+	let starIconColor='#D9D9D9';
 
-function toggleratings() {
-	showratings = !showratings;
-	starIconColor='#EA8C58';
-}
+	function toggleratings() {
+		showratings = !showratings;
+		if(showratings){
+			starIconColor='#EA8C58';
+		}
+		else{
+			starIconColor='#D9D9D9';
+		}
+	}
 
-import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { each } from 'svelte/internal';
 
-const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher();
 
-function setRating(newRating) {
-  if (newRating === rating) {
-	rating = 0;
-  } else {
-	rating = newRating;
-  }
+	function setRating(newRating) {
+		if (newRating === rating) {
+			rating = 0;
+		} else {
+			rating = newRating;
+		}
 
-  dispatch('ratingChanged', rating);
-}
+	dispatch('ratingChanged', rating);
+	}
 
 </script>
 
@@ -94,7 +105,7 @@ function setRating(newRating) {
 			</div>
 			<div>
 				<button class="btn" on:click={togglecomments}>
-					<span><IconMessageCircle size={25} color="{commentsIconColor}"/></span>
+					<span><IconMessageCircle size={25} color="{commentsIconColor}"/></span> 
 				</button>
 			</div>
 		</div>
@@ -110,13 +121,16 @@ function setRating(newRating) {
 	
 	<div class="comments {showcomments ? 'show' : ''}">
 		<h1>Feedbacks</h1>
-		<div class="enterfeedbacks">
+		<form class="enterfeedbacks">
   			<input type="text" class="feedbacks" placeholder="Enter Your Feedback"/>
-		</div>	
+		</form>	
 	</div>
 
 	<div class="starRatings {showratings ? 'show' : ''}">
 		<h1>Ratings</h1>
+		<div class="ratings">
+			<p>@{username} rated {rating} stars ★</p>
+		</div>
 	</div>
 	
 </div>
@@ -233,11 +247,14 @@ function setRating(newRating) {
   }
 
   .feedbacks{
+	padding: 10px;
 	height: 50px;
 	width: 100%;
 	border-radius: 10px;
+	color: #FFFFFF;
 	background-color:#111111;
 	border: 0;
+	font-family: Roboto;
   }
 
   .starRatings {
@@ -255,5 +272,12 @@ function setRating(newRating) {
   }
   .starRatings.show {
     transform: translateX(0);
+  }
+
+  .ratings{
+	padding: 20px;
+	font-family: Roboto;
+	color: #FFFFFF;
+	font-size: 14;
   }
 </style>

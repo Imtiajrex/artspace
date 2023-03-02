@@ -35,7 +35,12 @@
 
 	function togglecomments() {
 		showcomments = !showcomments;
-		commentsIconColor = '#EA8C58';
+		if(showcomments){
+			commentsIconColor='#EA8C58';
+		}
+		else{
+			commentsIconColor='#D9D9D9';
+		}
 	}
 
 	let showratings = false;
@@ -44,11 +49,17 @@
 
 	function toggleratings() {
 		showratings = !showratings;
-		starIconColor = '#EA8C58';
+		if(showratings){
+			starIconColor='#EA8C58';
+		}
+		else{
+			starIconColor='#D9D9D9';
+		}
 	}
 
-	import { createEventDispatcher, onMount } from 'svelte';
+		import { createEventDispatcher, onMount } from 'svelte';
 	import { Circle } from 'svelte-loading-spinners';
+	import { each } from 'svelte/internal';
 
 	const dispatch = createEventDispatcher();
 
@@ -128,10 +139,11 @@
 			</div>
 		</div>
 
-		<div class="starRatings {showratings ? 'show' : ''}">
-			<h1>Ratings</h1>
-		</div>
+	<div class="starRatings {showratings ? 'show' : ''}">
+		<h1>Ratings</h1>
 	</div>
+	
+</div>
 {/if}
 
 <style>
@@ -244,11 +256,14 @@
 	}
 
 	.feedbacks {
-		height: 50px;
+		padding: 10px;
+	height: 50px;
 		width: 100%;
 		border-radius: 10px;
-		background-color: #111111;
+		color: #FFFFFF;
+	background-color: #111111;
 		border: 0;
+	font-family: Roboto;
 	}
 
 	.starRatings {
@@ -267,4 +282,11 @@
 	.starRatings.show {
 		transform: translateX(0);
 	}
+
+  .ratings{
+	padding: 20px;
+	font-family: Roboto;
+	color: #FFFFFF;
+	font-size: 14;
+  }
 </style>

@@ -1,10 +1,10 @@
-<div>
+<a href="/user/id">
 	<h4>@imtiajrex</h4>
 	<img src="https://avatars.githubusercontent.com/u/56465152?v=4" alt="imtiajrex" />
-</div>
+</a>
 
 <style>
-	div {
+	a {
 		display: flex;
 		flex-direction: row;
 		align-items: center;

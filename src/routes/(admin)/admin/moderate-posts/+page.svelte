@@ -14,7 +14,12 @@
 	const getPosts = async () => {
 		loading = true;
 		try {
-			const res = await fetch('/api/admin/moderate');
+			const token = localStorage.getItem('token');
+			const res = await fetch('/api/admin/moderate', {
+				headers: {
+					'access-token': token
+				}
+			});
 			if (res.status !== 200) throw new Error(res.statusText);
 			const responseData = await res.json();
 			console.log(responseData);

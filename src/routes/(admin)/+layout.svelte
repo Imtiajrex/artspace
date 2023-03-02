@@ -1,6 +1,11 @@
 <script>
 	import Navbar from '$lib/components/admin/navbar.svelte';
 	import '../../app.css';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		if (!localStorage.getItem('token')) window.location.replace('/admin/login');
+	});
 </script>
 
 <div>

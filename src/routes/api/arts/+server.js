@@ -42,7 +42,7 @@ export async function POST({ url, request }) {
 	const imageLabelingData = await imageLabelingRes.json();
 	const imagesLabels = Object.keys(imageLabelingData);
 	console.log(imageLabelingData);
-	const nsfwWords = ['adult', 'violence', 'nude', 'fire', 'blood', ''];
+	const nsfwWords = ['adult', 'violence', 'nude', 'fire', 'blood'];
 	let flagged = 0;
 	imagesLabels.forEach((label) => {
 		if (nsfwWords.includes(label.toLowerCase())) {

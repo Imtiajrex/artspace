@@ -1,8 +1,8 @@
 import mysql from 'mysql2/promise';
 const dbConfig = {
 	username: 'doadmin',
-	password: 'AVNS_1VVQtbK_Sd526MpGRVe',
-	host: 'artspace-db-do-user-5692794-0.b.db.ondigitalocean.com',
+	password: 'AVNS_R-l0gDSsmZAGFJY0a4y',
+	host: 'artspace-do-user-5692794-0.b.db.ondigitalocean.com',
 	port: 25060,
 	database: 'artspace',
 	sslmode: 'REQUIRED'

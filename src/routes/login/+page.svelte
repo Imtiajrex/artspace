@@ -1,11 +1,14 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	// @ts-nocheck
 	import Button from '$lib/components/button.svelte';
 	import Input from '$lib/components/input.svelte';
 	let username = '';
 	let password = '';
-	let email = '';
+	let loading = false;
 	const handleClick = async (e) => {
+		loading = true;
 		e.preventDefault();
 		const res = await fetch('/api/login', {
 			method: 'POST',
@@ -14,16 +17,19 @@
 			},
 			body: JSON.stringify({
 				username,
-				password,
-				email
+				password
 			})
 		});
 		if (res.status != 200) {
+			loading = true;
 			const body = await res.json();
 			alert(body.message);
 			return;
 		}
-		window.location.href = '/login';
+		const body = await res.json();
+		localStorage.setItem('user_id', body.user_id);
+		loading = true;
+		goto('/');
 	};
 </script>
 
@@ -31,13 +37,11 @@
 	<form class="container" on:submit={handleClick}>
 		<h1>Welcome back, Login to Artspace</h1>
 		<Input label="Username" name="username" type="text" bind:value={username} />
-		<Input label="Email" name="email" type="email" bind:value={email} />
 		<Input label="Password" name="password" type="password" bind:value={password} />
-		<Button text="Sign In" maxWidth="250px" />
-		<br>
-		<p>Don't have an account?<a href="signup">Register</a></p>
+		<Button text="Sign In" maxWidth="250px" {loading} />
+		<br />
+		<p>Don't have an account?<a href="/signup">Register</a></p>
 	</form>
-	<img src="BG image.png" alt="">
 </div>
 
 <style>
@@ -52,15 +56,7 @@
 	.container {
 		max-width: 450px;
 		width: 60%;
-		justify-content: left;
-		margin-top:0;
-		margin-right: 20px;
-		
-	}
-	.img{
-        width: 40%;
-
-
+		margin-top: 0;
 	}
 	h1 {
 		color: white;
@@ -69,8 +65,8 @@
 		margin-bottom: 3rem;
 		font-size: 45px;
 	}
-	.a{
-		color:var(--primary);
+	.a {
+		color: var(--primary);
 	}
 	button {
 		margin-inline: auto;
